@@ -12,11 +12,19 @@
         #my-svg {
             width: 160em;
         }
+        #deactivate {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
 
 <?xml version="1.0" encoding="UTF-8"?>
+<button id="deactivate" class="deactivate-btn" onclick="deactivatePreview()">❌</button>
+
 <div id="my-svg" preserveAspectRatio="xMidYMid meet" >
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:lang="en-us" width="1900" height="1500" viewBox="0 0 1900 1500">
 <title>The Cognitive Bias Codex</title>
@@ -1491,6 +1499,18 @@
 </div>
 
 <script>
+    function showDeactivateButton() {
+  document.getElementById('deactivate').style.display = 'block';
+}
+
+function hideDeactivateButton() {
+  document.getElementById('deactivate').style.display = 'none';
+}
+    function deactivatePreview() {
+  // Hide the iframe container
+  var iframeContainer = document.getElementById('website-preview');
+  iframeContainer.style.display = 'none';
+}
     // Select all elements with the class 'interactive-part'
     var interactiveParts = document.querySelectorAll('.interactive-part');
 

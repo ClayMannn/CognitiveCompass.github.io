@@ -5,5 +5,5 @@ TODO
 - maintain UX with open preview of bias
     - add delay for open
     - find good position (also for responsibility design)
-    - add a close X
+    - add a close X ✔
 - build header/startpage with nice transition to the main content
