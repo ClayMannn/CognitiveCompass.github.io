@@ -11,6 +11,8 @@
         }
         #my-svg {
             width: 160em;
+            position: relative;
+
         }
         #deactivate {
             position: absolute;
@@ -18,12 +20,32 @@
             right: 0;
             z-index: 9999;
         }
+        body {
+            margin: 0;
+            position: relative;
+            height: 100vh;
+          }
+        .mouse-follow {
+                    position: absolute;
+                    width: 50px; /* Size of the sphere */
+                    height: 50px; /* Size of the sphere */
+                    border-radius: 50%; /* Makes it round */
+                    background-color:  rgba(0, 0, 255, 0.5); /* Solid blue background color */
+                    border: 0px solid rgba(0, 0, 255, 0.5); /* White border with 50% transparency */
+                    box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); /* Optional: blue glow effect with transparency */
+                    pointer-events: none; /* Allows click events to pass through */
+                    transition: transform 0.1s ease-out; /* Smooth transition for the follow effect */
+                    z-index: 10; /* Ensures it's above the SVG */
+            }
+
     </style>
 </head>
 <body>
 
 <?xml version="1.0" encoding="UTF-8"?>
 <button id="deactivate" class="deactivate-btn" onclick="deactivatePreview()">❌</button>
+<div class="mouse-follow" id="mouseFollow"></div>
+            
 
 <div id="my-svg" preserveAspectRatio="xMidYMid meet" >
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:lang="en-us" width="1900" height="1500" viewBox="0 0 1900 1500">
@@ -1492,6 +1514,7 @@
 </g>
 
 </svg>
+
 </div>
 
 <div id="website-preview">
@@ -1538,6 +1561,35 @@ function hideDeactivateButton() {
         //     document.getElementById('website-preview').style.display = 'none';
         // });
     });
+
+    const follow = document.getElementById('mouseFollow');
+      let mouseX = 0, mouseY = 0;
+      let followX = 0, followY = 0;
+    
+      const moveSphere = () => {
+        // Calculate the distance (dx, dy) between the mouse and the sphere
+        const dx = mouseX - followX;
+        const dy = mouseY - followY;
+    
+        // Move the sphere a fraction of the distance
+        followX += dx * 0.1; // Change the 0.1 to adjust the delay of the follow
+        followY += dy * 0.1; // Change the 0.1 to adjust the delay of the follow
+    
+        // Translate the sphere's position using CSS transform
+        follow.style.transform = `translate(${followX}px, ${followY}px)`;
+    
+        // Request the next frame of the animation
+        requestAnimationFrame(moveSphere);
+      };
+    
+      document.addEventListener('mousemove', (e) => {
+        // Update the mouse coordinates
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+    
+      // Start the animation
+      requestAnimationFrame(moveSphere);
 </script>
 
 
